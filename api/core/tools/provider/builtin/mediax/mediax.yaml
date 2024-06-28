@@ -1,0 +1,63 @@
+identity:
+  author: SongHaiyang
+  name: mediax
+  label:
+    en_US: Mediax
+    zh_Hans: Mediax
+    pt_BR: Mediax
+  description:
+    en_US: MediaxSearch
+    zh_Hans: 智能媒资通用对接API服务。
+    pt_BR: MediaxSearch
+  icon: icon.svg
+  tags:
+    - search
+credentials_for_provider:
+  mediax_api_domain:
+    type: text-input
+    required: true
+    label:
+      en_US: Mediax API domain
+      zh_Hans: Mediax API 域名
+      pt_BR: Mediax API domain
+    placeholder:
+      en_US: Mediax API domain
+      zh_Hans: 请输入你的 Mediax API 域名
+      pt_BR: Mediax API domain
+    help:
+      en_US: Get your Mediax API domain
+      zh_Hans: 指定调用 Mediax API 环境。
+      pt_BR: Get your Mediax API domain
+    url: https://mediax.shuwen.com
+  mediax_ak:
+    type: text-input
+    required: true
+    label:
+      en_US: Mediax API AK
+      zh_Hans: Mediax API AK
+      pt_BR: Mediax API AK
+    placeholder:
+      en_US: Mediax API AK
+      zh_Hans: 请输入你的 Mediax API AK
+      pt_BR: Mediax API AK
+    help:
+      en_US: Get your Mediax API AK
+      zh_Hans: 指定调用 Mediax API 环境 AK
+      pt_BR: Get your Mediax API AK
+    url: https://mediax.shuwen.com
+  mediax_sk:
+    type: text-input
+    required: true
+    label:
+      en_US: Mediax API SK
+      zh_Hans: Mediax API SK
+      pt_BR: Mediax API SK
+    placeholder:
+      en_US: Mediax API SK
+      zh_Hans: 请输入你的 Mediax API SK
+      pt_BR: Mediax API SK
+    help:
+      en_US: Get your Mediax API SK
+      zh_Hans: 指定调用 Mediax API 环境 SK
+      pt_BR: Get your Mediax API SK
+    url: https://mediax.shuwen.com

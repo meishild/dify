@@ -1,0 +1,54 @@
+identity:
+  name: mediax_search
+  author: SongHaiyang
+  label:
+    en_US: MediaxSearch
+    zh_Hans: 智能媒资通用搜索
+    pt_BR: MediaxSearch
+  icon: icon.svg
+description:
+  human:
+    en_US: Intelligent media asset performs general media asset search via search API.
+    zh_Hans: 智能媒资通过搜索API进行检索。
+    pt_BR: Intelligent media asset performs general media asset search via search API.
+  llm: A tool for performing a mediax search and extracting video and image. Input should be a search query.
+parameters:
+  - name: keyword
+    type: string
+    required: true
+    label:
+      en_US: Query string
+      zh_Hans: 查询关键词
+      pt_BR: Query string
+    human_description:
+      en_US: key words for searching
+      zh_Hans: 查询关键词
+      pt_BR: key words for searching
+    llm_description: key words for searching
+    form: llm
+  - name: media_types
+    type: string
+    required: false
+    label:
+      en_US: Media Types
+      zh_Hans: 搜索类型
+      pt_BR: Media Types
+    human_description:
+      en_US: Media Types
+      zh_Hans: video, image, audio 支持多种同时 
+      pt_BR: Media Types
+    llm_description: video, image, audio for searching types
+    form: llm
+  - name: hit_propert
+    type: string
+    required: false
+    label:
+      en_US: Hit Propert
+      zh_Hans: 命中类型
+      pt_BR: Hit Propert
+    human_description:
+      en_US: Hit Propert
+      zh_Hans: 为空查询所有类型。asr,face,ocr,title,videoTag,imageTag,audioTag,textTag,content，similarPart。
+      pt_BR: Hit Propert
+    llm_description: asr,face,ocr,title,videoTag,imageTag,audioTag,textTag,content，similarPart
+    form: llm
