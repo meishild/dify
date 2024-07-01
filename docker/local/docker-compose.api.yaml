@@ -209,6 +209,7 @@ services:
       INDEXING_MAX_SEGMENTATION_TOKENS_LENGTH: 1000
     volumes:
       # Mount the storage directory to the container, for storing user files.
+      - /mnt/nvme0n1/dify/api:/app/api
       - /mnt/nvme0n1/docker-data/dify/storage:/app/api/storage
     # uncomment to expose dify-api port to host
     # ports:
@@ -377,6 +378,7 @@ services:
       INDEXING_MAX_SEGMENTATION_TOKENS_LENGTH: 1000
     volumes:
       # Mount the storage directory to the container, for storing user files.
+      - /mnt/nvme0n1/dify/api:/app/api
       - /mnt/nvme0n1/docker-data/dify/storage:/app/api/storage
     networks:
       - ssrf_proxy_network

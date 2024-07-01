@@ -46,34 +46,22 @@ class MediaxSearch():
         sign_url = self.get_sign_url()
 
         url = f"{self.domain}/openapi/mediax/search/v1"
-        """
-        pageForm: 是当前页数。
-        hitPropert: 是搜索过程中用的命中条件，该参数是一个英文单词；
-        搜索命中，过滤字段，不传是所有
-        语言，人脸，字幕，标题，视频标签，图片标签，音频标签，文本标签，说明，类似命中
-        asr,face,ocr,title,videoTag,imageTag,audioTag,textTag,content，similarPart
-        keyword是搜索用的关键词，或者搜索用的名称。
-        媒资类型:
-        video
-        image
-        audio 
-        draft,doc
-        epaper
-        file
-        folder
-        """
         
         data = {
             "keyword": keyword,
             "pageForm": page_no,
             "pageSize": page_size
         }
-        if hit_propert:
+
+        # 不设置命中条件默认全部
+        if hit_propert and hit_propert != "ALL":
             data['hitPropert'] = hit_propert
-        if media_types:
-            data['mediaTypes'] = media_types
-        else:
+
+        # 为空默认设置图片、音频、视频。
+        if media_types is None or media_types == "ALL":
             data['mediaTypes'] = "video,audio,image"
+        else:
+            data['mediaTypes'] = media_types
 
         url = url + "?" + urlencode(data)  + "&" + sign_url
         
@@ -88,14 +76,30 @@ class MediaxSearch():
         if len(media_list) == 0:
             return True, []
         
-        return True, [{
-            "媒资编号": item["mediaId"],
-            "媒资标题": item["title"],
-            "媒资地址": item["url"]
-            } for item in media_list
-        ]
+        return True, media_list
+        
+        # [{
+        #     "媒资编号": item["mediaId"],
+        #     "媒资标题": item["title"],
+        #     "媒资地址": item["url"]
+        #     } for item in media_list
+        # ]
 
 class MediaxSearchTool(BuiltinTool):
+    def create_image_link_message(self, image: str, meta: dict = None, save_as: str = '') -> ToolInvokeMessage:
+        """
+            create an image message
+
+            :param image: the url of the image
+            :return: the image message
+        """
+        return ToolInvokeMessage(
+            type=ToolInvokeMessage.MessageType.IMAGE_LINK, 
+            message=image, 
+            meta=meta,
+            save_as=save_as
+        )
+   
     def _invoke(self, 
                 user_id: str,
                tool_parameters: dict[str, Any], 
@@ -111,9 +115,44 @@ class MediaxSearchTool(BuiltinTool):
         keyword = tool_parameters['keyword']
         hit_propert = tool_parameters.get('hit_propert', None)
         media_types = tool_parameters.get('media_types', None)
+        top_n = tool_parameters.get('top_n', None)
+        return_type = tool_parameters.get('return_type')
         is_success ,datas = media_searcher.mediax_search(
-            keyword, hit_propert=hit_propert, media_types=media_types)
+            keyword, hit_propert=hit_propert, media_types=media_types, page_size=top_n)
         if not is_success:
             raise Exception(f'绑定失败: {json.dumps(datas, ensure_ascii=False)}')
 
-        return self.create_text_message(text=json.dumps(datas, ensure_ascii=False))
+        if return_type == "json":
+            json_datas = [{
+                "媒资编号": item["mediaId"],
+                "媒资标题": item["title"],
+                "媒资地址": item["url"]
+                } for item in datas
+            ]
+            return self.create_text_message(text=json.dumps(json_datas, ensure_ascii=False))
+        else:
+            result = []
+            for item in datas:
+                # if item['mediaType'] == "video" or item['mediaType'] == "audio":
+                #     res = requests.get(item['url'])
+                #     m_type = item['subMediaType']
+                #     result.append(self.create_blob_message(
+                #         blob=res.content,
+                #         meta={'mime_type': f'video/{m_type}'}
+                #     ))
+                if item['mediaType'] == "image":
+                    m_type = item['subMediaType']
+                    logging.info("find image: " + item["url"])
+                    result.append(
+                        self.create_image_link_message(
+                            item["url"],
+                            meta={'mime_type': f'image/{m_type}'}
+                        )
+                    )
+                # else:
+                #     result.append(self.create_text_message(
+                #         text=f"{item['mediaId']}, {item['title']}"
+                #     ))
+
+        return result
+       

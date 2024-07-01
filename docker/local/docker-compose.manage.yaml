@@ -1,0 +1,12 @@
+version: "3.3"
+services:
+  tools-sqlynx:
+    image: mi1ktea/sqlynx:3.1.0
+    container_name: tools-sqlynx
+    ports:
+      - 1888:18888
+    environment:
+      - TZ=CST-8
+    volumes:
+      - /mnt/nvme0n1/docker-data/tools-sqlynx/sqlynx:/sqlynx
+    restart: unless-stopped

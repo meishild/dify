@@ -4,13 +4,11 @@ identity:
   label:
     en_US: MediaxSearch
     zh_Hans: 智能媒资通用搜索
-    pt_BR: MediaxSearch
   icon: icon.svg
 description:
   human:
     en_US: Intelligent media asset performs general media asset search via search API.
     zh_Hans: 智能媒资通过搜索API进行检索。
-    pt_BR: Intelligent media asset performs general media asset search via search API.
   llm: A tool for performing a mediax search and extracting video and image. Input should be a search query.
 parameters:
   - name: keyword
@@ -19,36 +17,94 @@ parameters:
     label:
       en_US: Query string
       zh_Hans: 查询关键词
-      pt_BR: Query string
     human_description:
       en_US: key words for searching
       zh_Hans: 查询关键词
-      pt_BR: key words for searching
     llm_description: key words for searching
     form: llm
+  - name: top_n
+    type: number
+    default: 5
+    required: true
+    label:
+      en_US: Top N
+      zh_Hans: 返回条数
+      pt_BR: Topo N
+    human_description:
+      en_US: Number of records returned. 5 is returned by default.
+      zh_Hans: 基于stars排序返回的记录数, 默认返回5条。
+    llm_description: Extract the first N records from the returned result.
+    form: form
+  - name: return_type
+    type: select
+    required: true
+    default: json
+    options: # 下拉框选项
+      - label:
+          en_US: json
+          zh_Hans: JSON对象
+        value: json
+      - label:
+          en_US: item
+          zh_Hans: 样式对象
+        value: item
+    label:
+      en_US: Return Type
+      zh_Hans: 返回数据类型
+    human_description:
+      en_US: Return data type.
+      zh_Hans: 返回的数据类型。
+    form: form
   - name: media_types
-    type: string
-    required: false
+    type: select
+    required: true
+    default: ALL
+    options: # 下拉框选项
+      - label:
+          en_US: all
+          zh_Hans: 全部（视频、音频、图片）
+        value: ALL
+      - label:
+          en_US: video
+          zh_Hans: 视频
+        value: video
+      - label:
+          en_US: image
+          zh_Hans: 图片
+        value: image
+      - label:
+          en_US: audio
+          zh_Hans: 音频
+        value: audio
     label:
       en_US: Media Types
       zh_Hans: 搜索类型
       pt_BR: Media Types
     human_description:
       en_US: Media Types
-      zh_Hans: video, image, audio 支持多种同时 
-      pt_BR: Media Types
-    llm_description: video, image, audio for searching types
-    form: llm
+      zh_Hans: video, image, audio 支持多种同时
+    form: form
   - name: hit_propert
-    type: string
-    required: false
+    type: select
+    required: true
+    default: ALL
+    options: # 下拉框选项
+      - label:
+          en_US: all
+          zh_Hans: 全部
+        value: ALL
+      - label:
+          en_US: algo
+          zh_Hans: 算法
+        value: asr,face,ocr,videoTag,imageTag,audioTag,textTag
+      - label:
+          en_US:  general
+          zh_Hans: 常规
+        value: title,content,similarPart
     label:
       en_US: Hit Propert
-      zh_Hans: 命中类型
-      pt_BR: Hit Propert
+      zh_Hans: 命中方式
     human_description:
       en_US: Hit Propert
-      zh_Hans: 为空查询所有类型。asr,face,ocr,title,videoTag,imageTag,audioTag,textTag,content，similarPart。
-      pt_BR: Hit Propert
-    llm_description: asr,face,ocr,title,videoTag,imageTag,audioTag,textTag,content，similarPart
-    form: llm
+      zh_Hans: 默认全部检索，算法包含所有算法，常规为标题、正文和编目等。
+    form: form

@@ -156,11 +156,11 @@ class ToolNode(BaseNode):
         """
         Extract tool response binary
         """
+        from urllib.parse import urlparse
         result = []
 
         for response in tool_response:
-            if response.type == ToolInvokeMessage.MessageType.IMAGE_LINK or \
-                    response.type == ToolInvokeMessage.MessageType.IMAGE:
+            if response.type == ToolInvokeMessage.MessageType.IMAGE:
                 url = response.message
                 ext = path.splitext(url)[1]
                 mimetype = response.meta.get('mime_type', 'image/jpeg')
@@ -176,6 +176,24 @@ class ToolNode(BaseNode):
                     filename=filename,
                     extension=ext,
                     mime_type=mimetype,
+                ))
+            elif response.type == ToolInvokeMessage.MessageType.IMAGE_LINK :
+                url = response.message
+                ext = path.splitext(urlparse(url).path)[1]
+                mimetype = response.meta.get('mime_type', 'image/jpeg')
+                filename = response.save_as or urlparse(url).path.split('/')[-1]
+
+                # get tool file id
+                tool_file_id = url.split('/')[-1].split('.')[0]
+                result.append(FileVar(
+                    tenant_id=self.tenant_id,
+                    type=FileType.IMAGE,
+                    transfer_method=FileTransferMethod.REMOTE_URL,
+                    related_id=tool_file_id,
+                    filename=filename,
+                    extension=ext,
+                    mime_type=mimetype,
+                    url=url
                 ))
             elif response.type == ToolInvokeMessage.MessageType.BLOB:
                 # get tool file id
