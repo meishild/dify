@@ -1,28 +1,21 @@
-version: '3'
+x-shared-env: &shared-api-worker-env
+  CONSOLE_API_URL: ${CONSOLE_API_URL}
+  APP_API_URL: ${APP_API_URL}
+  SENTRY_DSN: ${SENTRY_DSN}
+
 services:
-  # Frontend web application.
-  web:
-    image: langgenius/dify-web:0.6.11
+  prod-web:
+    image: langgenius/dify-web:0.6.12-fix1
     container_name: prod-dify-web
     restart: always
     environment:
-      # The base URL of console application api server, refers to the Console base URL of WEB service if console domain is
-      # different from api or web app domain.
-      # example: http://cloud.dify.ai
-      CONSOLE_API_URL: ''
-      # The URL for Web APP api server, refers to the Web App base URL of WEB service if web app domain is different from
-      # console or api domain.
-      # example: http://udify.app
-      APP_API_URL: ''
-      # The DSN for Sentry error reporting. If not set, Sentry error reporting will be disabled.
-      SENTRY_DSN: ''
-    # uncomment to expose dify-web port to host
-    # ports:
-    #   - "3000:3000"
+      CONSOLE_API_URL: ${CONSOLE_API_URL:-}
+      APP_API_URL: ${APP_API_URL:-}
+      SENTRY_DSN: ${SENTRY_DSN:-}
 
   # The nginx reverse proxy.
   # used for reverse proxying the API service and Web service.
-  nginx:
+  prod-nginx:
     image: nginx:latest
     container_name: prod-nginx
     restart: always
@@ -33,10 +26,6 @@ services:
       #- ./nginx/ssl:/etc/ssl
     ports:
       - "8012:80"
-      #- "443:443"
-# notice: if you use windows-wsl2, postgres may not work properly due to the ntfs issue.you can use volumes to mount the data directory to the host.
-# volumes:
-#   postgres:
 networks:
   # create a network between sandbox, api and ssrf_proxy, and can not access outside.
   ssrf_proxy_network:

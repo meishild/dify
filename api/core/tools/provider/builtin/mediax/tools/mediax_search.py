@@ -131,28 +131,30 @@ class MediaxSearchTool(BuiltinTool):
             ]
             return self.create_text_message(text=json.dumps(json_datas, ensure_ascii=False))
         else:
-            result = []
-            for item in datas:
-                # if item['mediaType'] == "video" or item['mediaType'] == "audio":
-                #     res = requests.get(item['url'])
+            # result = []
+            # for item in datas:
+                # if item['mediaType'] == "image":
                 #     m_type = item['subMediaType']
-                #     result.append(self.create_blob_message(
-                #         blob=res.content,
-                #         meta={'mime_type': f'video/{m_type}'}
-                #     ))
+                #     logging.info("find image: " + item["url"])
+                #     result.append(
+                #         self.create_image_message(
+                #             item["url"],
+                #             # meta={'mime_type': f'image/{m_type}'}
+                #         )
+                #     )
+            
+            markdown = "## 检索到的内容如下：\n"
+            other_list = []
+            for item in datas:
                 if item['mediaType'] == "image":
-                    m_type = item['subMediaType']
-                    logging.info("find image: " + item["url"])
-                    result.append(
-                        self.create_image_link_message(
-                            item["url"],
-                            meta={'mime_type': f'image/{m_type}'}
-                        )
-                    )
-                # else:
-                #     result.append(self.create_text_message(
-                #         text=f"{item['mediaId']}, {item['title']}"
-                #     ))
-
+                    markdown += f"#### {item['title']}\n"
+                    markdown += f"* 媒资编号: {item['mediaId']}\n"
+                    markdown += f"![图片]({item['url']})\n\n"
+                elif item['mediaType'] == "video" or item['mediaType'] == "audio":
+                    other_list.append(item)
+            for item in other_list:
+                markdown += f"[{item['title']}]({item['url']})\n\n"
+            
+            result = self.create_text_message(text=markdown)
         return result
        
