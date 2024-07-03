@@ -1,0 +1,47 @@
+identity:
+  name: es_search
+  author: SongHaiyang
+  label:
+    en_US: Elasticsearch Search
+    zh_Hans: 智能媒资ES搜索
+  icon: icon.svg
+description:
+  human:
+    en_US: Intelligent media es search.
+    zh_Hans: 智能媒资通过ES语句进行ES检索。
+  llm: A tool for Elasticsearch Search.
+parameters:
+  - name: query
+    type: string
+    required: true
+    label:
+      en_US: Query string
+      zh_Hans: es查询语句JSON结构
+    human_description:
+      en_US:  es json data for searching
+      zh_Hans: 查询关键词
+    llm_description: es json data for searching
+    form: llm
+  - name: index_name
+    type: string
+    required: true
+    label:
+      en_US: Index Name
+      zh_Hans: 索引名称
+    human_description:
+      en_US: index name for searching es
+      zh_Hans: 索引名称
+    llm_description: index name for searching es
+    form: llm
+  - name: source_includes
+    type: string
+    required: false
+    label:
+      en_US: Query source include
+      zh_Hans: 查询字段列表，以英文逗号作为分隔无空格，为空则不限制。
+    human_description:
+      en_US: Query source include
+      zh_Hans: 查询字段列表，以英文逗号作为分隔无空格，为空则不限制。
+    llm_description: Query source include
+    form: form
+  

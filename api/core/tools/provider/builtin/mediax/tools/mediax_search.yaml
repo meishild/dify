@@ -22,6 +22,17 @@ parameters:
       zh_Hans: 查询关键词
     llm_description: key words for searching
     form: llm
+  - name: source_includes
+    type: string
+    required: false
+    label:
+      en_US: Query source include
+      zh_Hans: 查询字段列表，以英文逗号作为分隔无空格，为空则不限制。
+    human_description:
+      en_US: Query source include
+      zh_Hans: 查询字段列表，以英文逗号作为分隔无空格，为空则不限制。
+    llm_description: Query source include
+    form: llm
   - name: top_n
     type: number
     default: 5
@@ -81,14 +92,14 @@ parameters:
       zh_Hans: 搜索类型
     human_description:
       en_US: Media Types
-      zh_Hans: video, image, audio 支持多种同时
+      zh_Hans: video, image, audio 选择这三种类型，可以多选，通过英文逗号进行分割。
     form: llm
-    llm_description: 搜索的媒体类型，支持ALL、video、image、audio这四种类型，如果没有限制默认使用ALL。
+    llm_description: 搜索的媒体类型，支持video,image,audio这三种类型，可以多选，通过英文逗号进行分割。
   - name: hit_propert
     type: select
     required: true
     default: ALL
-    options: # 下拉框选项
+    options:
       - label:
           en_US: all
           zh_Hans: 全部
