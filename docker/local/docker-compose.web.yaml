@@ -12,6 +12,9 @@ services:
       CONSOLE_API_URL: ${CONSOLE_API_URL:-}
       APP_API_URL: ${APP_API_URL:-}
       SENTRY_DSN: ${SENTRY_DSN:-}
+    dns:
+      - 223.5.5.5
+      - 8.8.8.8
 
   # The nginx reverse proxy.
   # used for reverse proxying the API service and Web service.
@@ -26,6 +29,9 @@ services:
       #- ./nginx/ssl:/etc/ssl
     ports:
       - "8012:80"
+    dns:
+      - 223.5.5.5
+      - 8.8.8.8
 networks:
   # create a network between sandbox, api and ssrf_proxy, and can not access outside.
   ssrf_proxy_network:

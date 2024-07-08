@@ -2,48 +2,19 @@ from typing import Any, Union
 import json
 import logging
 import requests
+from core.tools.provider.builtin.mediax.tools.shuwen import SignTool
 from core.tools.entities.tool_entities import ToolInvokeMessage
 from core.tools.tool.builtin_tool import BuiltinTool
 
-
 class MediaxSearch():
-    def __init__(self, domain: str, access_key: str, secret_key: str) -> None:
-        """Initialize SerpAPI tool provider."""
-        self.access_key = access_key 
-        self.secret_key = secret_key
-        self.domain = domain
-
-    def get_signature(self, timestamp):
-        import hashlib
-
-        need_signature_str = f"{self.secret_key}{timestamp}{self.access_key}"
-        logging.info(need_signature_str)
-        try:
-            md5 = hashlib.md5()
-            md5.update(need_signature_str.encode('utf-8'))
-            summery = md5.hexdigest()
-            return summery
-        except Exception as e:
-            logging.error("获取签名串失败", exc_info=e)
-            return ""
-
-    def get_sign_url(self):
-        import time
-        current_time = str(int(time.time() * 1000))
-        
-        sign = self.get_signature(current_time)
-        biz_param = {
-            'signature' : sign,
-            'access_key': self.access_key,
-            'timestamp': current_time,
-        }
-        return '&'.join([f"{key}={value}" for key, value in biz_param.items()])
+    def __init__(self, api_domain, ak, sk) -> None:
+        self.sign_tool = SignTool(api_domain, ak, sk)
 
     def mediax_search(self, keyword, page_no=1, page_size=20, hit_propert=None, media_types=None):
         from urllib.parse import urlencode
         import json
         
-        sign_url = self.get_sign_url()
+        sign_url = self.sign_tool.get_sign_url()
 
         url = f"{self.domain}/openapi/mediax/search/v1"
         
@@ -77,13 +48,6 @@ class MediaxSearch():
             return True, []
         
         return True, media_list
-        
-        # [{
-        #     "媒资编号": item["mediaId"],
-        #     "媒资标题": item["title"],
-        #     "媒资地址": item["url"]
-        #     } for item in media_list
-        # ]
 
 class MediaxSearchTool(BuiltinTool):
     def create_image_link_message(self, image: str, meta: dict = None, save_as: str = '') -> ToolInvokeMessage:
