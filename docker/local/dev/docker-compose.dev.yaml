@@ -259,7 +259,7 @@ x-shared-env: &shared-api-worker-env
 services:
   # API service
   dev-api:
-    image: langgenius/dify-api:0.6.12-fix1
+    image: langgenius/dify-api:0.6.13
     container_name: dev-dify-api
     restart: always
     dns:
@@ -286,7 +286,7 @@ services:
   # worker service
   # The Celery worker for processing the queue.
   dev-worker:
-    image: langgenius/dify-api:0.6.12-fix1
+    image: langgenius/dify-api:0.6.13
     container_name: dev-dify-worker
     restart: always
     extra_hosts:
@@ -307,7 +307,7 @@ services:
       - ssrf_proxy_network
       - default
   dev-web:
-    image: langgenius/dify-web:0.6.12-fix1
+    image: langgenius/dify-web:0.6.13
     container_name: dev-dify-web
     restart: always
     dns:

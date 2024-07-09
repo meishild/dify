@@ -5,7 +5,7 @@ x-shared-env: &shared-api-worker-env
 
 services:
   prod-web:
-    image: langgenius/dify-web:0.6.12-fix1
+    image: langgenius/dify-web:0.6.13
     container_name: prod-dify-web
     restart: always
     environment:
