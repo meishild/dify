@@ -24,12 +24,12 @@ class ESSearch():
             _source['excludes'] = _source.get('excludes', []) + ['imageFeature']
         query_json['_source'] = _source
 
-        url = f"{self.domain}/openapi/elasticsearch/query/{index_name}/_search"
+        url = f"{self.domain}/data_access/elasticsearch/query/{index_name}/_search"
         headers = {"Content-Type": "application/json"}
 
         logging.info("\n查询条件:"+ json.dumps(query_json))
-        response = requests.get(url, data=json.dumps(query_json), headers=headers)
-        result = response.json()
+        response = requests.post(url, data=json.dumps(query_json), headers=headers)
+        result = response.json() 
         logging.info("\n请求结果：" + json.dumps(result, ensure_ascii=True))
         return result
 
@@ -42,7 +42,11 @@ class ESSearchTool(BuiltinTool):
             invoke tools
         """
         mediax_api_domain = self.runtime.credentials['mediax_api_domain']
-        es_searcher = ESSearch(mediax_api_domain)
+        domain = tool_parameters['domain']
+        if not domain:
+            domain = mediax_api_domain
+
+        es_searcher = ESSearch(domain)
 
         query = tool_parameters['query']
         index_name = tool_parameters.get('index_name', None)

@@ -22,17 +22,6 @@ parameters:
       zh_Hans: 查询关键词
     llm_description: key words for searching
     form: llm
-  - name: source_includes
-    type: string
-    required: false
-    label:
-      en_US: Query source include
-      zh_Hans: 查询字段列表，以英文逗号作为分隔无空格，为空则不限制。
-    human_description:
-      en_US: Query source include
-      zh_Hans: 查询字段列表，以英文逗号作为分隔无空格，为空则不限制。
-    llm_description: Query source include
-    form: llm
   - name: top_n
     type: number
     default: 5

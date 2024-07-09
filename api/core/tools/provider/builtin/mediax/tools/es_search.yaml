@@ -16,10 +16,10 @@ parameters:
     required: true
     label:
       en_US: Query string
-      zh_Hans: es查询语句JSON结构
+      zh_Hans: ES查询语句
     human_description:
       en_US:  es json data for searching
-      zh_Hans: 查询关键词
+      zh_Hans: ES查询JSON结构数据
     llm_description: es json data for searching
     form: llm
   - name: index_name
@@ -38,10 +38,21 @@ parameters:
     required: false
     label:
       en_US: Query source include
-      zh_Hans: 查询字段列表，以英文逗号作为分隔无空格，为空则不限制。
+      zh_Hans: 查询字段列表，以英文逗号作为分隔无空格，为空则不限制
     human_description:
       en_US: Query source include
       zh_Hans: 查询字段列表，以英文逗号作为分隔无空格，为空则不限制。
     llm_description: Query source include
+    form: form
+  - name: domain
+    type: string
+    required: false
+    label:
+      en_US: ES Domain
+      zh_Hans: ES的环境Domain
+    human_description:
+      en_US: ES Domain
+      zh_Hans: ES的环境Domain，例如:https://mam.shuwen.com，为空默认mam环境
+    llm_description: ES Domain
     form: form
   

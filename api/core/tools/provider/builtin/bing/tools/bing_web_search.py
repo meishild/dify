@@ -181,16 +181,16 @@ class BingSearchTool(BuiltinTool):
         lang = tool_parameters.get('language', 'en')
         filter = []
 
-        # if tool_parameters.get('enable_computation', False):
-        #     filter.append('Computation')
-        # if tool_parameters.get('enable_entities', False):
-        #     filter.append('Entities')
-        # if tool_parameters.get('enable_news', False):
-        #     filter.append('News')
-        # if tool_parameters.get('enable_related_search', False):
-        #     filter.append('RelatedSearches')
-        # if tool_parameters.get('enable_webpages', False):
-        filter.append('WebPages')
+        if tool_parameters.get('enable_computation', False):
+            filter.append('Computation')
+        if tool_parameters.get('enable_entities', False):
+            filter.append('Entities')
+        if tool_parameters.get('enable_news', False):
+            filter.append('News')
+        if tool_parameters.get('enable_related_search', False):
+            filter.append('RelatedSearches')
+        if tool_parameters.get('enable_webpages', False):
+            filter.append('WebPages')
 
         if not filter:
             raise Exception('At least one filter is required')

@@ -20,7 +20,7 @@ class _CommonAzureOpenAI:
             "api_key": credentials['openai_api_key'],
             "azure_endpoint": credentials['openai_api_base'],
             "api_version": api_version,
-            "timeout": Timeout(315.0, read=300.0, write=10.0, connect=5.0),
+            "timeout": Timeout(315.0, read=300.0, write=10.0, connect=20.0),
             "max_retries": 1,
         }
 
