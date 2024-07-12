@@ -42,6 +42,7 @@ WORKDIR /app/api
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends curl wget vim nodejs ffmpeg libgmp-dev libmpfr-dev libmpc-dev \
+    && apt-get install -y ttf-mscorefonts-installer fontconfig \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/*
 
