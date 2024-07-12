@@ -11,6 +11,39 @@ description:
     zh_Hans: 智能媒资通过搜索API进行检索。
   llm: A tool for performing a mediax search and extracting video and image. Input should be a search query.
 parameters:
+  - name: domain
+    type: string
+    required: true
+    label:
+      en_US: ES Domain
+      zh_Hans: ES的环境Domain
+    human_description:
+      en_US: ES Domain
+      zh_Hans: ES的环境Domain，例如:https://mam.shuwen.com，为空默认mam环境
+    llm_description: ES Domain
+    form: llm
+  - name: access_key
+    type: string
+    required: true
+    label:
+      en_US: Access Key
+      zh_Hans: 指定租户的AccessKey
+    human_description:
+      en_US: Access Key
+      zh_Hans: 指定租户的AccessKey
+    llm_description: use access key
+    form: llm
+  - name: secret_key
+    type: string
+    required: true
+    label:
+      en_US: Secret Key
+      zh_Hans: 指定租户的SecretKey
+    human_description:
+      en_US: Secret Key
+      zh_Hans: 指定租户的SecretKey
+    llm_description: Secret Key
+    form: llm
   - name: keyword
     type: string
     required: true

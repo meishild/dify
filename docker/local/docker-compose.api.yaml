@@ -279,6 +279,7 @@ services:
       - 8.8.8.8
     extra_hosts:
       - "openai.shuwen.com:118.31.181.18"
+      - "xinference.ops.shuwen.com: 192.168.100.223"
     networks:
       - ssrf_proxy_network
       - default
@@ -303,6 +304,7 @@ services:
       - 8.8.8.8
     extra_hosts:
       - "openai.shuwen.com: 118.31.181.18"
+      - "xinference.ops.shuwen.com: 192.168.100.223"
     networks:
       - ssrf_proxy_network
       - default

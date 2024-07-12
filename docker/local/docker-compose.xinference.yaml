@@ -1,7 +1,7 @@
 version: '3.3'
 services:    
   xinference:
-    image: xinference:latest
+    image: xprobe/xinference:latest
     container_name: basic-xinference
     # GPU运行环境，如果宿主机未安装，将deploy配置隐藏即可
     deploy:

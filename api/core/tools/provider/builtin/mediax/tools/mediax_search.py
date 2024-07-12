@@ -71,10 +71,10 @@ class MediaxSearchTool(BuiltinTool):
         """
             invoke tools
         """
-        mediax_ak = self.runtime.credentials['mediax_ak']
-        mediax_sk = self.runtime.credentials['mediax_sk']
-        mediax_api_domain = self.runtime.credentials['mediax_api_domain']
-        media_searcher = MediaxSearch(mediax_api_domain, mediax_ak, mediax_sk)
+        access_key = tool_parameters['access_key']
+        secret_key = tool_parameters['secret_key']
+        domain = tool_parameters['domain']
+        media_searcher = MediaxSearch(domain, access_key, secret_key)
 
         keyword = tool_parameters['keyword']
         hit_propert = tool_parameters.get('hit_propert', None)
