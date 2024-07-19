@@ -1,0 +1,14 @@
+identity:
+  author: SongHaiyang
+  name: mediax
+  label:
+    en_US: Mediax
+    zh_Hans: Mediax
+    pt_BR: Mediax
+  description:
+    en_US: MediaxSearch
+    zh_Hans: 智能媒资API检索类服务
+    pt_BR: MediaxSearch
+  icon: icon.svg
+  tags:
+    - search

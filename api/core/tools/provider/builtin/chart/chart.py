@@ -14,7 +14,7 @@ def init_fonts():
     fonts = findSystemFonts()
 
     popular_unicode_fonts = [
-        'Arial Unicode MS', 'DejaVu Sans', 'DejaVu Sans Mono', 'DejaVu Serif', 'FreeMono', 'FreeSans', 'FreeSerif',
+        'WenQuanYi Zen Hei', 'Arial Unicode MS', 'DejaVu Sans', 'DejaVu Sans Mono', 'DejaVu Serif', 'FreeMono', 'FreeSans', 'FreeSerif',
         'Liberation Mono', 'Liberation Sans', 'Liberation Serif', 'Noto Mono', 'Noto Sans', 'Noto Serif', 'Open Sans',
         'Roboto', 'Source Code Pro', 'Source Sans Pro', 'Source Serif Pro', 'Ubuntu', 'Ubuntu Mono'
     ]
@@ -36,6 +36,7 @@ def init_fonts():
     for font in popular_unicode_fonts:
         if font in supported_fonts:
             plt.rcParams['font.sans-serif'] = font
+            plt.rcParams['axes.unicode_minus'] = False
             break
     
 init_fonts()

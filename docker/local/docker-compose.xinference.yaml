@@ -1,0 +1,27 @@
+version: '3.3'
+services:    
+  xinference:
+    image: xprobe/xinference:latest
+    container_name: basic-xinference
+    # GPU运行环境，如果宿主机未安装，将deploy配置隐藏即可
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['0', '1']
+            capabilities: [gpu]
+    environment:
+      - HTTP_PROXY=http://192.168.176.1:7890
+      - HTTPS_PROXY=http://192.168.176.1:7890
+    volumes:
+      - /mnt/nvme0n1/docker-data/xinference:/root/.xinference
+      - /mnt/nvme0n1/docker-data/cache/huggingface:/root/.cache/huggingface
+      - /mnt/nvme0n1/docker-data/cache/modelscope:/root/.cache/modelscope
+    ports:
+      - 9997:9997
+    command:
+      - bash
+      - -c
+      - |
+        xinference-local -H 0.0.0.0  --log-level debug

@@ -1,0 +1,143 @@
+identity:
+  name: mediax_search
+  author: SongHaiyang
+  label:
+    en_US: MediaxSearch
+    zh_Hans: 智能媒资通用搜索
+  icon: icon.svg
+description:
+  human:
+    en_US: Intelligent media asset performs general media asset search via search API.
+    zh_Hans: 智能媒资通过搜索API进行检索。
+  llm: A tool for performing a mediax search and extracting video and image. Input should be a search query.
+parameters:
+  - name: domain
+    type: string
+    required: true
+    label:
+      en_US: ES Domain
+      zh_Hans: ES的环境Domain
+    human_description:
+      en_US: ES Domain
+      zh_Hans: ES的环境Domain，例如:https://mam.shuwen.com，为空默认mam环境
+    llm_description: ES Domain
+    form: llm
+  - name: access_key
+    type: string
+    required: true
+    label:
+      en_US: Access Key
+      zh_Hans: 指定租户的AccessKey
+    human_description:
+      en_US: Access Key
+      zh_Hans: 指定租户的AccessKey
+    llm_description: use access key
+    form: llm
+  - name: secret_key
+    type: string
+    required: true
+    label:
+      en_US: Secret Key
+      zh_Hans: 指定租户的SecretKey
+    human_description:
+      en_US: Secret Key
+      zh_Hans: 指定租户的SecretKey
+    llm_description: Secret Key
+    form: llm
+  - name: keyword
+    type: string
+    required: true
+    label:
+      en_US: Query string
+      zh_Hans: 查询关键词
+    human_description:
+      en_US: key words for searching
+      zh_Hans: 查询关键词
+    llm_description: key words for searching
+    form: llm
+  - name: top_n
+    type: number
+    default: 5
+    required: true
+    label:
+      en_US: Top N
+      zh_Hans: 返回条数
+      pt_BR: Topo N
+    human_description:
+      en_US: Number of records returned. 5 is returned by default.
+      zh_Hans: 基于stars排序返回的记录数, 默认返回5条。
+    llm_description: Extract the first N records from the returned result.
+    form: form
+  - name: return_type
+    type: select
+    required: true
+    default: json
+    options: # 下拉框选项
+      - label:
+          en_US: json
+          zh_Hans: JSON对象
+        value: json
+      - label:
+          en_US: item
+          zh_Hans: 样式对象
+        value: item
+    label:
+      en_US: Return Type
+      zh_Hans: 返回数据类型
+    human_description:
+      en_US: Return data type.
+      zh_Hans: 返回的数据类型。
+    form: form
+  - name: media_types
+    type: select
+    required: true
+    default: ALL
+    options: # 下拉框选项
+      - label:
+          en_US: all
+          zh_Hans: 全部（视频、音频、图片）
+        value: ALL
+      - label:
+          en_US: video
+          zh_Hans: 视频
+        value: video
+      - label:
+          en_US: image
+          zh_Hans: 图片
+        value: image
+      - label:
+          en_US: audio
+          zh_Hans: 音频
+        value: audio
+    label:
+      en_US: Media Types
+      zh_Hans: 搜索类型
+    human_description:
+      en_US: Media Types
+      zh_Hans: video, image, audio 选择这三种类型，可以多选，通过英文逗号进行分割。
+    form: llm
+    llm_description: 搜索的媒体类型，支持video,image,audio这三种类型，可以多选，通过英文逗号进行分割。
+  - name: hit_propert
+    type: select
+    required: true
+    default: ALL
+    options:
+      - label:
+          en_US: all
+          zh_Hans: 全部
+        value: ALL
+      - label:
+          en_US: algo
+          zh_Hans: 算法
+        value: asr,face,ocr,videoTag,imageTag,audioTag,textTag
+      - label:
+          en_US:  general
+          zh_Hans: 常规
+        value: title,content,similarPart
+    label:
+      en_US: Hit Propert
+      zh_Hans: 命中方式
+    human_description:
+      en_US: Hit Propert
+      zh_Hans: 默认全部检索，算法包含所有算法，常规为标题、正文和编目等。
+    form: form
