@@ -275,7 +275,6 @@ services:
       MODE: api
     volumes:
       # Mount the storage directory to the container, for storing user files.
-      - /mnt/nvme0n1/dify/api/core:/app/api/core
       - /mnt/nvme0n1/docker-data/dify/storage:/app/api/storage
     # uncomment to expose dify-api port to host
     # ports:
@@ -302,7 +301,6 @@ services:
       # Startup mode, 'worker' starts the Celery worker for processing the queue.
       MODE: worker
     volumes:
-      - /mnt/nvme0n1/dify/api/core:/app/api/core
       # Mount the storage directory to the container, for storing user files.
       - /mnt/nvme0n1/docker-data/dify/storage:/app/api/storage
     networks:
