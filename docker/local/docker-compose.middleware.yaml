@@ -86,6 +86,7 @@ services:
   # https://docs.dify.ai/getting-started/install-self-hosted/install-faq#id-16.-why-is-ssrf_proxy-needed
   ssrf_proxy:
     image: ubuntu/squid:latest
+    container_name: basic-ssrf_proxy
     restart: always
     volumes:
       - ./ssrf_proxy/squid.conf.template:/etc/squid/squid.conf.template
