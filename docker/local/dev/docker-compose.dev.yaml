@@ -24,6 +24,7 @@ x-shared-env: &shared-api-worker-env
   CELERY_WORKER_AMOUNT: ${CELERY_WORKER_AMOUNT:-}
   API_TOOL_DEFAULT_CONNECT_TIMEOUT: ${API_TOOL_DEFAULT_CONNECT_TIMEOUT:-10}
   API_TOOL_DEFAULT_READ_TIMEOUT: ${API_TOOL_DEFAULT_READ_TIMEOUT:-60}
+  HOSTED_FETCH_APP_TEMPLATES_MODE: ${HOSTED_FETCH_APP_TEMPLATES_MODE:-builtin}
   DB_USERNAME: ${DB_USERNAME:-postgres}
   DB_PASSWORD: ${DB_PASSWORD:-difyai123456}
   DB_HOST: ${DB_HOST:-db}
@@ -176,6 +177,7 @@ x-shared-env: &shared-api-worker-env
   SSRF_PROXY_HTTP_URL: ${SSRF_PROXY_HTTP_URL:-http://ssrf_proxy:3128}
   SSRF_PROXY_HTTPS_URL: ${SSRF_PROXY_HTTPS_URL:-http://ssrf_proxy:3128}
   
+  
 services:
   # API service
   dev-api:
@@ -195,6 +197,9 @@ services:
       MODE: api
     volumes:
       # Mount the storage directory to the container, for storing user files.
+      - /mnt/nvme0n1/dify/api/core:/app/api/core
+      - /mnt/nvme0n1/dify/api/configs:/app/api/configs
+      - /mnt/nvme0n1/dify/api/services:/app/api/services
       - /mnt/nvme0n1/docker-data/dify/storage:/app/api/storage
     # uncomment to expose dify-api port to host
     # ports:
@@ -227,7 +232,7 @@ services:
       - ssrf_proxy_network
       - default
   dev-web:
-    image: langgenius/dify-web:0.6.15
+    image: xhzy-registry.cn-hangzhou.cr.aliyuncs.com/share/xhzy-dify-web:0.6.15-dev-2
     container_name: dev-dify-web
     restart: always
     dns:
